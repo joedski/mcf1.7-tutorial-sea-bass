@@ -3,16 +3,28 @@
 
 [Here is Sea Bass' tutorial on how to add a new block, a new item, and a new entity with AI.](http://www.minecraftforum.net/topic/2389683-172-forge-add-new-block-item-entity-ai-creative-tab-language-localization-block-textures-side-textures/)
 
+I'm stepping through this tutorial as someone who is new to Java, but is experienced with JavaScript and ActionScript3 (the latter of which is kinda structured like Java.)  This will be reflected in the comments which detail my meditations on various minutiae and sometimes things unrelated altogether.
+
+There are some minor differences between Sea Bass' tutorial code and the code in this repo.  A few are detailed here:
+- The package name is a full name rather than just a single-deep name because you should be naming your packages with full names.  Usually something like "com.&lt;your name&gt;.&lt;mod(or group) name&gt;".  I added an extra "tutorial" after "com" because I'm going through a bunch of tutorials and want to keep them grouped logically together.
+- MODID is different because I'm going through different tutorials and I'm practicing naming things uniquely.  You should do it, too!  It's fun!  (not really, but it *is* necessary.)
+- There are/will be two separate blocks, one for using the same texture all over, and one for using different textures on various sides.
+- The block's name is attached to the block's class in a public static final String creatively named NAME, just like with the MODID and NAME for the mod, because I hate magic values and you should too!  (You shouldn't change the name after you write the class the first time, though.  That's even worse!)
+
+More may be added to this list as time goes on.
+
+## Navigating the Project
+
 There are/will be tags you can use to quickly and easily jump to various points in the tutorial history, since looking at the differences/diffs between files is easier than trying to find them yourself.  That's why we have computers, anyway.
 
 As of writing, tags are:
-* *1-block-texture* - A new mod with a single block inserted into a new Creative tab.  The block has a texture, too.
+* *1-block-texture* - A new mod with a single block inserted into a new Creative tab.  The block has a texture, too.  This matches steps 1-3 of the tutorial.
 
 More will be added as progress through the tutorial is made.
 
 ## Stop Reading Here
 
-Yes, I cuddle all the braces.  I might change that in future projects to match the Forge style more closely maybe.  Maybe not.
+Yes, I cuddle all the braces.  I like my braces.  They are cute and cuddly.  I might change that in future projects to match the Forge style more closely maybe.  Maybe not.
 
 There's a probably badly done Norwegian Bokmål localization because av læring dårlig norsk.
 
