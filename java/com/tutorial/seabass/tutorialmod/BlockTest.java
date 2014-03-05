@@ -11,12 +11,14 @@ public class BlockTest extends Block {
 	public static final String NAME = "blockTest";
 	
 	/*
-	 * The constructor is protected so that other mods cannot instantiate the block directly.
-	 * I'm not sure if this is how it should be or not.  What if someone wants to make an addon-mod?
-	 * Their code should not be in my package namespace, but if the block is not accessable, then
-	 * how do they use this block?
+	 * The constructor is protected so that other mods cannot instantiate the block directly,
+	 * but subclasses of that block can still access their super().  Since the class itself is public,
+	 * other packages can still extend it.  This helps enforce keeping blocks (and other stuff) as singletons.
 	 * 
-	 * Is it better to make this protected or public by default?
+	 * Note that if you look at Minecraft's own blocks, they're set up with protected constructors, too.
+	 * 
+	 * Other mods that want to interact with your mod's blocks should reference the singleton attached to
+	 * the mod's base class.  (MyMod in this case.)  Because, you know, that's how it's done everywhere else.
 	 */
 	protected BlockTest() {
 		super( Material.ground );
