@@ -28,6 +28,7 @@ public class MyMod {
 	 * Or as with the BlockTest's constructor, this.setCreativeTab( MyMod.tabMyMod );
 	 */
 	public static Block blockTest;
+	public static Block blockTestSided;
 	
 	public static CreativeTabs tabMyMod = new CreativeTabsMyMod( "MyMod" );
 	
@@ -42,5 +43,8 @@ public class MyMod {
 	public void preInit( FMLPreInitializationEvent event ) {
 		blockTest = new BlockTest().setBlockName( BlockTest.NAME );
 		GameRegistry.registerBlock( blockTest, blockTest.getUnlocalizedName() );
+		
+		blockTestSided = new BlockTestSided().setBlockName( BlockTestSided.NAME );
+		GameRegistry.registerBlock( blockTestSided, blockTestSided.getUnlocalizedName() );
 	}
 }
