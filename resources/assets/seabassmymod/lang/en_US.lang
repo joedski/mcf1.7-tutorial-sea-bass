@@ -1,3 +1,6 @@
 tile.blockTest.name=Block Test
+tile.blockTestSided.name=Block Test Sided
+
+item.itemTest.name=Item Test
 
 itemGroup.MyMod=My Mod

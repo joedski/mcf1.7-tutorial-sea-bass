@@ -1,4 +1,6 @@
 tile.blockTest.name=Blokk Test
 tile.blockTestSided.name=Blokk Test Sidig
 
+item.itemTest.name=Item Test
+
 itemGroup.MyMod=Moden Min

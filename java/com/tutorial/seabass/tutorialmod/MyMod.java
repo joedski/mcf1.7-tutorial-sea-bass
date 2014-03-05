@@ -67,6 +67,5 @@ public class MyMod {
 		 */
 		itemTest = new ItemTest().setUnlocalizedName( ItemTest.NAME );
 		GameRegistry.registerItem( itemTest, ItemTest.NAME );
-				
 	}
 }
