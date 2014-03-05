@@ -42,6 +42,26 @@ public class MyMod {
 	public static Item itemTest;
 	
 	public static CreativeTabs tabMyMod = new CreativeTabsMyMod( "MyMod" );
+
+	/*
+	 * Utility method to make registering entities less annoying.
+	 * 
+	 * I don't know why this is static.  I don't think it matters, though.
+	 */
+	@SuppressWarnings( { "rawtypes", "unchecked" } )
+	public static void registerEntity( Class entityClass, String name ) {
+		int entityID = EntityRegistry.findGlobalUniqueEntityId();
+		long seed = name.hashCode();
+		Random rand = new Random( seed );
+		int primaryEggColor = rand.nextInt() * 0xFFFFFF; // 0xffffff is RGB 255,255,255...
+		int secondaryEggColor = rand.nextInt() * 0xFFFFFF;
+		
+		EntityRegistry.registerGlobalEntityID( entityClass, name, entityID );
+		EntityRegistry.registerModEntity( entityClass, name, entityID, instance, 64, 1, true ); // long range, eh?
+		EntityList.entityEggs.put(
+				Integer.valueOf( entityID ),
+				new EntityList.EntityEggInfo( entityID, primaryEggColor, secondaryEggColor ) );
+	}
 	
 	/*
 	 * Mod init code!
@@ -57,6 +77,7 @@ public class MyMod {
 	public void preInit( FMLPreInitializationEvent event ) {
 		this.initBlocks( event );
 		this.initItems( event );
+		this.initEntities( event );
 	}
 	
 	public void initBlocks( FMLPreInitializationEvent event ) {
@@ -77,23 +98,7 @@ public class MyMod {
 		GameRegistry.registerItem( itemTest, ItemTest.NAME );
 	}
 	
-	/*
-	 * Utility method to make registering entities less annoying.
-	 * 
-	 * I don't know why this is static.  I don't think it matters, though.
-	 */
-	@SuppressWarnings( { "rawtypes", "unchecked" } )
-	public static void registerEntity( Class entityClass, String name ) {
-		int entityID = EntityRegistry.findGlobalUniqueEntityId();
-		long seed = name.hashCode();
-		Random rand = new Random( seed );
-		int primaryEggColor = rand.nextInt() * 0xFFFFFF; // 0xffffff is RGB 255,255,255...
-		int secondaryEggColor = rand.nextInt() * 0xFFFFFF;
-		
-		EntityRegistry.registerGlobalEntityID( entityClass, name, entityID );
-		EntityRegistry.registerModEntity( entityClass, name, entityID, instance, 64, 1, true ); // long range, eh?
-		EntityList.entityEggs.put(
-				Integer.valueOf( entityID ),
-				new EntityList.EntityEggInfo( entityID, primaryEggColor, secondaryEggColor ) );
+	public void initEntities( FMLPreInitializationEvent event ) {
+		registerEntity( EntityTest.class, EntityTest.NAME );
 	}
 }
