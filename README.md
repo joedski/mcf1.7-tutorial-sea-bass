@@ -22,7 +22,8 @@ There are/will be tags you can use to quickly and easily jump to various points 
 As of writing, tags are:
 * 1-block-texture - A new mod with a single block inserted into a new Creative tab.  The block has a texture, too.  This matches steps 1-3 of the tutorial.
 * 2-block-sided-texture - A block with a different texture for the top than from the rest of the sides.  This matches step 4 of the tutorial.
-* *3-item* - Adding an item.  This matches step 5 of the tutorial.
+* 3-item - Adding an item.  This matches step 5 of the tutorial.
+* *4-entity* - Adding an entity.  This matches step 6 of the tutorial.
 
 More will be added as progress through the tutorial is made.
 

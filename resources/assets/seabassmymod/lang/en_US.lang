@@ -1,3 +1,5 @@
+entity.entityTest.name=Entity Test
+
 tile.blockTest.name=Block Test
 tile.blockTestSided.name=Block Test Sided
 
