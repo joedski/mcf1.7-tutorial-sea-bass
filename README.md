@@ -31,6 +31,9 @@ You might have noticed there are no Forge sources in here.  Congratulations, Shi
 
 I set my workspace up according to [this here thang by MrrGingerNinja](http://www.minecraftforum.net/topic/2413773-172-modding-with-forge-1-jdk-eclipse-forge-and-gradle/).  Incidentally, if you're new to Eclipse, that's a good way to introduce yourself to it.
 
+If when running the client to test your mod you see massive slowdowns and/or a LOT of OutOfMemoryErrors in the console, add this to the VM arguments:
+> -Xms512M -Xmx2G -XX:PermSize=512m
+
 ## Stop Reading Here
 
 Yes, I cuddle all the braces.  I like my braces.  They are cute and cuddly.  I might change that in future projects to match the Forge style more closely maybe.  Maybe not.

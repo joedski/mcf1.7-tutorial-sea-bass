@@ -23,6 +23,7 @@ public class BlockTestSided extends Block {
 	 */
 	@SideOnly( Side.CLIENT )
 	protected IIcon blockIcon;
+	@SideOnly( Side.CLIENT )
 	protected IIcon blockIconTop;
 	
 	protected BlockTestSided() {

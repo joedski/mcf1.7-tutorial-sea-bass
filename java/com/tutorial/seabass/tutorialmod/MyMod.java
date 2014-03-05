@@ -6,6 +6,7 @@ package com.tutorial.seabass.tutorialmod;
 
 import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.item.Item;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
@@ -30,6 +31,8 @@ public class MyMod {
 	public static Block blockTest;
 	public static Block blockTestSided;
 	
+	public static Item itemTest;
+	
 	public static CreativeTabs tabMyMod = new CreativeTabsMyMod( "MyMod" );
 	
 	/*
@@ -38,13 +41,32 @@ public class MyMod {
 	 * in the Pre-Initialization stage.  For details on all the events, look at the
 	 * javadoc for @EventHandler.  Note that it has /suggestions/ on what you do
 	 * at each event, but I have heard that you cannot register blocks after pre-init.
+	 * 
+	 * I put the block inits and the item init into separate methods, because that's how I roll.
+	 * Also, when making lengthy constructors with lots of blocks, this helps me keep things organized.
 	 */
 	@EventHandler
 	public void preInit( FMLPreInitializationEvent event ) {
+		this.initBlocks( event );
+		this.initItems( event );
+	}
+	
+	public void initBlocks( FMLPreInitializationEvent event ) {
 		blockTest = new BlockTest().setBlockName( BlockTest.NAME );
-		GameRegistry.registerBlock( blockTest, blockTest.getUnlocalizedName() );
+		GameRegistry.registerBlock( blockTest, BlockTest.NAME );
 		
 		blockTestSided = new BlockTestSided().setBlockName( BlockTestSided.NAME );
-		GameRegistry.registerBlock( blockTestSided, blockTestSided.getUnlocalizedName() );
+		GameRegistry.registerBlock( blockTestSided, BlockTestSided.NAME );
+	}
+	
+	public void initItems( FMLPreInitializationEvent event ) {
+		/*
+		 * I moved the call to setTextureName() from here to ItemTest's constructor,
+		 * because it's more consistent with how BlockTest is written and I get twitchy
+		 * if they don't match.
+		 */
+		itemTest = new ItemTest().setUnlocalizedName( ItemTest.NAME );
+		GameRegistry.registerItem( itemTest, ItemTest.NAME );
+				
 	}
 }

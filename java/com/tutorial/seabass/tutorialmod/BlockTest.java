@@ -42,7 +42,9 @@ public class BlockTest extends Block {
 		 * The important thing is that the name you use here matches the name of the texture file on disk.
 		 * (besides, what if "tile." becomes "tiles." or "foobarbaz."?!  What if...?! (Don't stress over this
 		 * and just pick a way to do it, and STICK WITH IT.))
+		 * 
+		 * NOTE: static finals are available to the local scopes just like instance properties.
 		 */
-		this.setBlockTextureName( MyMod.MODID + ":" + BlockTest.NAME );
+		this.setBlockTextureName( MyMod.MODID + ":" + NAME );
 	}
 }
