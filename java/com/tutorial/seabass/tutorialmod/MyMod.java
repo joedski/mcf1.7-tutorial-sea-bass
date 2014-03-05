@@ -4,12 +4,17 @@ package com.tutorial.seabass.tutorialmod;
  * This is an example mod with lots of annotations as I cement the thoughts in my head.
  */
 
+import java.util.Random;
+
 import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.EntityList;
 import net.minecraft.item.Item;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
+import cpw.mods.fml.common.Mod.Instance;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
+import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 
 @Mod( modid = MyMod.MODID, version = MyMod.VERSION, name = MyMod.MODNAME )
@@ -22,6 +27,9 @@ public class MyMod {
 	public static final String MODID = "seabassmymod";
 	public static final String VERSION = "in_development";
 	public static final String MODNAME = "MyMod - Sea Bass Tutorial Mod";
+	
+	@Instance( MODID )
+	public static MyMod instance;
 	
 	/*
 	 * First we have the static things that are used to hold all our singletons.
@@ -67,5 +75,25 @@ public class MyMod {
 		 */
 		itemTest = new ItemTest().setUnlocalizedName( ItemTest.NAME );
 		GameRegistry.registerItem( itemTest, ItemTest.NAME );
+	}
+	
+	/*
+	 * Utility method to make registering entities less annoying.
+	 * 
+	 * I don't know why this is static.  I don't think it matters, though.
+	 */
+	@SuppressWarnings( { "rawtypes", "unchecked" } )
+	public static void registerEntity( Class entityClass, String name ) {
+		int entityID = EntityRegistry.findGlobalUniqueEntityId();
+		long seed = name.hashCode();
+		Random rand = new Random( seed );
+		int primaryEggColor = rand.nextInt() * 0xFFFFFF; // 0xffffff is RGB 255,255,255...
+		int secondaryEggColor = rand.nextInt() * 0xFFFFFF;
+		
+		EntityRegistry.registerGlobalEntityID( entityClass, name, entityID );
+		EntityRegistry.registerModEntity( entityClass, name, entityID, instance, 64, 1, true ); // long range, eh?
+		EntityList.entityEggs.put(
+				Integer.valueOf( entityID ),
+				new EntityList.EntityEggInfo( entityID, primaryEggColor, secondaryEggColor ) );
 	}
 }
