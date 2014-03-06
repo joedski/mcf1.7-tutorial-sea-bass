@@ -10,9 +10,13 @@ import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityList;
 import net.minecraft.item.Item;
+
+import com.tutorial.seabass.tutorialmod.proxy.CommonProxy;
+
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
+import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
@@ -30,6 +34,10 @@ public class MyMod {
 	
 	@Instance( MODID )
 	public static MyMod instance;
+	
+	@SidedProxy( clientSide = "com.tutorial.seabass.tutorialmod.proxy.ClientProxy",
+			serverSide = "com.tutorial.seabass.tutorialmod.proxy.CommonProxy" )
+	public static CommonProxy proxy;
 	
 	/*
 	 * First we have the static things that are used to hold all our singletons.
@@ -78,6 +86,8 @@ public class MyMod {
 		this.initBlocks( event );
 		this.initItems( event );
 		this.initEntities( event );
+		
+		proxy.registerRenderers();
 	}
 	
 	public void initBlocks( FMLPreInitializationEvent event ) {
