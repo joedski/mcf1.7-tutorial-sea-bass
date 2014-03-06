@@ -110,5 +110,6 @@ public class MyMod {
 	
 	public void initEntities( FMLPreInitializationEvent event ) {
 		registerEntity( EntityTest.class, EntityTest.NAME );
+		registerEntity( EntityTestWithAI.class, EntityTestWithAI.NAME );
 	}
 }
