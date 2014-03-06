@@ -46,6 +46,13 @@ public class EntityTestWithAI extends EntityTest {
 		
 		/*
 		 * Congratulations!  You now have a shiny new ordinary vanilla mob!
+		 * 
+		 * Well ... sorta.
+		 * 
+		 * If you spawn this mob, you'll see that it exhibits some curious behavior.
+		 * It will gleefully chase you, yes, but if you're out of reach, then its head will shake about.
+		 * 
+		 * AI's hard, yo.
 		 */
 	}
 	

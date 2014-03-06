@@ -23,7 +23,9 @@ As of writing, tags are:
 * 1-block-texture - A new mod with a single block inserted into a new Creative tab.  The block has a texture, too.  This matches steps 1-3 of the tutorial.
 * 2-block-sided-texture - A block with a different texture for the top than from the rest of the sides.  This matches step 4 of the tutorial.
 * 3-item - Adding an item.  This matches step 5 of the tutorial.
-* *4-entity* - Adding an entity.  This matches step 6 of the tutorial.
+* 4-entity - Adding an entity.  This matches step 6 of the tutorial.
+* 5-renderer - Adds a custom renderer to the entity so it's not just a lame white box.  This matches step 7 of the tutorial.
+* *6-ai* - Adds a subclass of the old entity which uses the advanced AI system instead of the basic default AI.  Uses the same texture as the other one.
 
 More will be added as progress through the tutorial is made.
 
