@@ -9,7 +9,9 @@ import java.util.Random;
 import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityList;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 
 import com.tutorial.seabass.tutorialmod.proxy.CommonProxy;
 
@@ -17,6 +19,7 @@ import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
 import cpw.mods.fml.common.SidedProxy;
+import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
@@ -111,5 +114,31 @@ public class MyMod {
 	public void initEntities( FMLPreInitializationEvent event ) {
 		registerEntity( EntityTest.class, EntityTest.NAME );
 		registerEntity( EntityTestWithAI.class, EntityTestWithAI.NAME );
+	}
+	
+	/*
+	 * Init-time init code!
+	 * 
+	 * By this time, all items and blocks are supposed to be initialized.
+	 */
+	@EventHandler
+	public void init( FMLInitializationEvent event ) {
+		this.initRecipes( event );
+	}
+	
+	public void initRecipes( FMLInitializationEvent event ) {
+		GameRegistry.addShapedRecipe( new ItemStack( MyMod.itemTest, 2 ),
+				"ddd",
+				" d ",
+				" d ",
+				'd', Blocks.dirt );
+		
+		GameRegistry.addShapedRecipe( new ItemStack( MyMod.blockTest, 1 ),
+				"tt",
+				"tt",
+				't', MyMod.itemTest );
+		
+		GameRegistry.addShapelessRecipe( new ItemStack( MyMod.blockTestSided, 1 ),
+				MyMod.blockTest, MyMod.blockTest );
 	}
 }

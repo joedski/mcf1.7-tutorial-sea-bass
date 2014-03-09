@@ -25,7 +25,8 @@ As of writing, tags are:
 * 3-item - Adding an item.  This matches step 5 of the tutorial.
 * 4-entity - Adding an entity.  This matches step 6 of the tutorial.
 * 5-renderer - Adds a custom renderer to the entity so it's not just a lame white box.  This matches step 7 of the tutorial.
-* *6-ai* - Adds a subclass of the old entity which uses the advanced AI system instead of the basic default AI.  Uses the same texture as the other one.
+* 6-ai - Adds a subclass of the old entity which uses the advanced AI system instead of the basic default AI.  Uses the same texture as the other one.
+* *7-recipes* - Adds some simple recipes, 2 shaped and 1 unshaped.
 
 More will be added as progress through the tutorial is made.
 
