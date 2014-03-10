@@ -4,6 +4,7 @@ package com.tutorial.seabass.tutorialmod;
  * This is an example mod with lots of annotations as I cement the thoughts in my head.
  */
 
+import java.lang.reflect.Field;
 import java.util.Random;
 
 import net.minecraft.block.Block;
@@ -53,6 +54,50 @@ public class MyMod {
 	public static Item itemTest;
 	
 	public static CreativeTabs tabMyMod = new CreativeTabsMyMod( "MyMod" );
+	
+	/*
+	 * Reflection!  This is so much easier in interpreted languages.
+	 * It's probably just as easy in either case to shoot yourself in the foot, though.
+	 * 
+	 * This method first tries to get the static "NAME" field, then failing that uses the class's name.
+	 * This can only get no name if you create anonymous classes.  Which is possible.
+	 */
+	public static String getThingName( Class<?> thingClass ) {
+		Field nameField;
+		String name = null;
+		
+		try {
+			nameField = thingClass.getField( "NAME" );
+		}
+		catch( SecurityException e ) {
+			e.printStackTrace();
+			nameField = null;
+		}
+		catch( NoSuchFieldException e ) {
+			e.printStackTrace();
+			nameField = null;
+		}
+		
+		if( nameField != null ) {
+			try {
+				name = (String) nameField.get( null );
+			}
+			catch( IllegalArgumentException e ) {
+				e.printStackTrace();
+				nameField = null;
+			}
+			catch( IllegalAccessException e ) {
+				e.printStackTrace();
+				nameField = null;
+			}
+		}
+		
+		if( nameField == null ) {
+			name = thingClass.getSimpleName();
+		}
+		
+		return name;
+	}
 
 	/*
 	 * Utility method to make registering entities less annoying.
@@ -60,7 +105,8 @@ public class MyMod {
 	 * I don't know why this is static.  I don't think it matters, though.
 	 */
 	@SuppressWarnings( { "rawtypes", "unchecked" } )
-	public static void registerEntity( Class entityClass, String name ) {
+	public static void registerEntity( Class entityClass ) {
+		String name = getThingName( entityClass );
 		int entityID = EntityRegistry.findGlobalUniqueEntityId();
 		long seed = name.hashCode();
 		Random rand = new Random( seed );
@@ -74,6 +120,28 @@ public class MyMod {
 				new EntityList.EntityEggInfo( entityID, primaryEggColor, secondaryEggColor ) );
 	}
 	
+	public static Block registerBlock( Class<? extends Block> blockClass ) throws InstantiationException, IllegalAccessException {
+		String name;
+		Block block = null;
+		block = blockClass.newInstance();
+		name = getThingName( blockClass );
+		block.setBlockName( name );
+		GameRegistry.registerBlock( block, name );
+		
+		return block;
+	}
+
+	public static Item registerItem( Class<? extends Item> itemClass ) throws InstantiationException, IllegalAccessException {
+		String name;
+		Item item = null;
+		item = itemClass.newInstance();
+		name = getThingName( itemClass );
+		item.setUnlocalizedName( name );
+		GameRegistry.registerItem( item, name );
+		
+		return item;
+	}
+	
 	/*
 	 * Mod init code!
 	 * Or pre-init, as it were.  For MC 1.7, Forge requires you to register your blocks
@@ -85,7 +153,7 @@ public class MyMod {
 	 * Also, when making lengthy constructors with lots of blocks, this helps me keep things organized.
 	 */
 	@EventHandler
-	public void preInit( FMLPreInitializationEvent event ) {
+	public void preInit( FMLPreInitializationEvent event ) throws InstantiationException, IllegalAccessException {
 		this.initBlocks( event );
 		this.initItems( event );
 		this.initEntities( event );
@@ -93,27 +161,27 @@ public class MyMod {
 		proxy.registerRenderers();
 	}
 	
-	public void initBlocks( FMLPreInitializationEvent event ) {
-		blockTest = new BlockTest().setBlockName( BlockTest.NAME );
-		GameRegistry.registerBlock( blockTest, BlockTest.NAME );
-		
-		blockTestSided = new BlockTestSided().setBlockName( BlockTestSided.NAME );
-		GameRegistry.registerBlock( blockTestSided, BlockTestSided.NAME );
+	/*
+	 * Added reflection to get the names from the class objects since I myself am doing that as a standard thing.
+	 * The real question is, do I handle the exceptions here?  Do I handle just a few?
+	 */
+	public void initBlocks( FMLPreInitializationEvent event ) throws InstantiationException, IllegalAccessException {
+		blockTest = registerBlock( BlockTest.class );
+		blockTestSided = registerBlock( BlockTestSided.class );
 	}
 	
-	public void initItems( FMLPreInitializationEvent event ) {
+	public void initItems( FMLPreInitializationEvent event ) throws InstantiationException, IllegalAccessException {
 		/*
 		 * I moved the call to setTextureName() from here to ItemTest's constructor,
 		 * because it's more consistent with how BlockTest is written and I get twitchy
 		 * if they don't match.
 		 */
-		itemTest = new ItemTest().setUnlocalizedName( ItemTest.NAME );
-		GameRegistry.registerItem( itemTest, ItemTest.NAME );
+		itemTest = registerItem( ItemTest.class );
 	}
 	
-	public void initEntities( FMLPreInitializationEvent event ) {
-		registerEntity( EntityTest.class, EntityTest.NAME );
-		registerEntity( EntityTestWithAI.class, EntityTestWithAI.NAME );
+	public void initEntities( FMLPreInitializationEvent event ) throws InstantiationException, IllegalAccessException {
+		registerEntity( EntityTest.class );
+		registerEntity( EntityTestWithAI.class );
 	}
 	
 	/*
@@ -138,7 +206,7 @@ public class MyMod {
 				"tt",
 				't', MyMod.itemTest );
 		
-		GameRegistry.addShapelessRecipe( new ItemStack( MyMod.blockTestSided, 1 ),
+		GameRegistry.addShapelessRecipe( new ItemStack( MyMod.blockTestSided, 2 ),
 				MyMod.blockTest, MyMod.blockTest );
 	}
 }
